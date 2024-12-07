@@ -41,7 +41,13 @@ pub fn part2(lines: Lines<BufReader<File>>) -> String {
                     new_line.remove(i);
                     new_line
                 })
-                .map(|permutation| permutation.iter().tuple_windows().map(|(a, b)| b - a).collect::<Vec<_>>())
+                .map(|permutation| {
+                    permutation
+                        .iter()
+                        .tuple_windows()
+                        .map(|(a, b)| b - a)
+                        .collect::<Vec<_>>()
+                })
                 .filter(|nums| nums.iter().all(|n| (*n).abs() > 0 && (*n).abs() <= 3))
                 .map(|nums| {
                     nums.iter()

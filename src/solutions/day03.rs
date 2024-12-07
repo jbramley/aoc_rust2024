@@ -1,6 +1,6 @@
+use regex::Regex;
 use std::fs::File;
 use std::io::{BufReader, Lines};
-use regex::Regex;
 
 pub fn part1(lines: Lines<BufReader<File>>) -> String {
     let v = lines.flatten().collect::<Vec<_>>().join("\n");
@@ -17,8 +17,9 @@ pub fn part2(lines: Lines<BufReader<File>>) -> String {
     let mulre = Regex::new("(mul\\((\\d+),(\\d+)\\)|(do|don't)\\(\\))").unwrap();
     let mut total: i32 = 0;
     let mut do_mul = true;
-    mulre.captures_iter(&v).for_each(|c| {
-        match c.get(0).unwrap().as_str() {
+    mulre
+        .captures_iter(&v)
+        .for_each(|c| match c.get(0).unwrap().as_str() {
             "do()" => do_mul = true,
             "don't()" => do_mul = false,
             _ => {
@@ -28,7 +29,6 @@ pub fn part2(lines: Lines<BufReader<File>>) -> String {
                     total += x * y;
                 }
             }
-        }
-    });
+        });
     format!("Total: {}", total)
 }

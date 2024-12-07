@@ -1,4 +1,4 @@
-use std::collections::{HashMap};
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufReader, Lines};
 use std::iter::zip;
@@ -26,8 +26,13 @@ pub fn part2(lines: Lines<BufReader<File>>) -> String {
     for line in lines.flatten() {
         let (loc1, loc2) = line.split_once("   ").unwrap();
         locations1.push(loc1.parse::<i32>().unwrap());
-        locations2.entry(loc2.parse::<i32>().unwrap()).and_modify(| c | *c += 1).or_insert(1);
+        locations2
+            .entry(loc2.parse::<i32>().unwrap())
+            .and_modify(|c| *c += 1)
+            .or_insert(1);
     }
-    let similarity = locations1.into_iter().fold(0, | acc, x | acc + (x * locations2.get(&x).unwrap_or(&0)));
+    let similarity = locations1
+        .into_iter()
+        .fold(0, |acc, x| acc + (x * locations2.get(&x).unwrap_or(&0)));
     format!("{}\n", similarity)
 }

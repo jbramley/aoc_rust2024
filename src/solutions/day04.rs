@@ -9,19 +9,32 @@ pub fn part1(lines: Lines<BufReader<File>>) -> String {
     let mut ss: HashSet<(usize, usize)> = HashSet::new();
 
     for (row, line) in lines.flatten().enumerate() {
-        line.chars().into_iter().enumerate().for_each(|(col, c)| match c {
-            'X' => { xs.insert((row, col)); }
-            'M' => { ms.insert((row, col)); }
-            'A' => { as_.insert((row, col)); }
-            'S' => { ss.insert((row, col)); }
-            _ => {}
-        })
+        line.chars()
+            .into_iter()
+            .enumerate()
+            .for_each(|(col, c)| match c {
+                'X' => {
+                    xs.insert((row, col));
+                }
+                'M' => {
+                    ms.insert((row, col));
+                }
+                'A' => {
+                    as_.insert((row, col));
+                }
+                'S' => {
+                    ss.insert((row, col));
+                }
+                _ => {}
+            })
     }
     let mut xmas_count = 0;
     for x in xs.iter() {
         for rd in -1..=1 {
             for cd in -1..=1 {
-                if rd == 0 && cd == 0 { continue; }
+                if rd == 0 && cd == 0 {
+                    continue;
+                }
                 let mr = x.0 as i32 + rd;
                 let ar = mr + rd;
                 let sr = ar + rd;
@@ -30,7 +43,9 @@ pub fn part1(lines: Lines<BufReader<File>>) -> String {
                 let ac = mc + cd;
                 let sc = ac + cd;
 
-                if sr < 0 || sc < 0 { continue; }
+                if sr < 0 || sc < 0 {
+                    continue;
+                }
 
                 let mr = mr as usize;
                 let mc = mc as usize;
@@ -50,7 +65,10 @@ pub fn part1(lines: Lines<BufReader<File>>) -> String {
 }
 
 pub fn part2(lines: Lines<BufReader<File>>) -> String {
-    let chars = lines.flatten().map(|l| l.chars().collect::<Vec<char>>()).collect::<Vec<Vec<char>>>();
+    let chars = lines
+        .flatten()
+        .map(|l| l.chars().collect::<Vec<char>>())
+        .collect::<Vec<Vec<char>>>();
     let good_corners = ["MMSS", "MSMS", "SMSM", "SSMM"];
     let mut xmas_count = 0;
     for r in 0..chars.len() {
@@ -59,13 +77,18 @@ pub fn part2(lines: Lines<BufReader<File>>) -> String {
             let c2 = c + 2;
             let ar = r + 1;
             let ac = c + 1;
-            if r2 >= chars.len() || c2 >= chars[r].len() { continue; }
-            if chars[ar][ac] != 'A' { continue; }
-            let corners = [chars[r][c], chars[r][c2], chars[r2][c], chars[r2][c2]].iter().collect::<String>();
+            if r2 >= chars.len() || c2 >= chars[r].len() {
+                continue;
+            }
+            if chars[ar][ac] != 'A' {
+                continue;
+            }
+            let corners = [chars[r][c], chars[r][c2], chars[r2][c], chars[r2][c2]]
+                .iter()
+                .collect::<String>();
             if good_corners.contains(&corners.as_str()) {
                 xmas_count += 1;
             }
-
         }
     }
     format!("{}", xmas_count)
