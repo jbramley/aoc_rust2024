@@ -40,37 +40,35 @@ pub fn count_stones_after_blinks(
         memo[&(s.to_string(), blinks)]
     } else if blinks == 0 {
         1
-    } else if s == "0" {
-        let ct = count_stones_after_blinks("1", blinks - 1, memo);
-        memo.insert((s.to_string(), blinks), ct);
-        ct
-    } else if s.len() % 2 == 0 {
-        let st = s.split_at(s.len() / 2);
-        let ct = [st.0, st.1]
-            .iter()
-            .map(|sp| {
-                count_stones_after_blinks(
-                    format!("{}", sp.parse::<u64>().unwrap()).as_str(),
-                    blinks - 1,
-                    memo,
-                )
-            })
-            .sum();
-        memo.insert((s.to_string(), blinks), ct);
-        ct
     } else {
-        let ct = count_stones_after_blinks(
-            format!("{}", s.parse::<u64>().unwrap() * 2024u64).as_str(),
-            blinks - 1,
-            memo,
-        );
+        let ct = if s == "0" {
+            count_stones_after_blinks("1", blinks - 1, memo)
+        } else if s.len() % 2 == 0 {
+            let st = s.split_at(s.len() / 2);
+            [st.0, st.1]
+                .iter()
+                .map(|sp| {
+                    count_stones_after_blinks(
+                        format!("{}", sp.parse::<u64>().unwrap()).as_str(),
+                        blinks - 1,
+                        memo,
+                    )
+                })
+                .sum()
+        } else {
+            count_stones_after_blinks(
+                format!("{}", s.parse::<u64>().unwrap() * 2024u64).as_str(),
+                blinks - 1,
+                memo,
+            )
+        };
         memo.insert((s.to_string(), blinks), ct);
         ct
     }
 }
 
 pub fn part2(lines: Lines<BufReader<File>>) -> String {
-    let mut stones = lines
+    let stones = lines
         .flatten()
         .next()
         .unwrap()
