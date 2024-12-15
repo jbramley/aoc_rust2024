@@ -1,5 +1,4 @@
 use itertools::Itertools;
-use num::integer::gcd;
 use std::cmp::min;
 use std::fs::File;
 use std::io::{BufReader, Lines};

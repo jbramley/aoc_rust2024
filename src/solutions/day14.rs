@@ -67,7 +67,7 @@ fn display_robots(robots: &Vec<Robot>, width: i32, height: i32) {
     }
 }
 
-fn maybe_a_tree(robots: &Vec<Robot>, width: i32, height: i32) -> bool {
+fn maybe_a_tree(robots: &Vec<Robot>) -> bool {
     // Attempt 1: Assume the tree is in the middle
     // let mid_x = width / 2;
     //
@@ -103,7 +103,7 @@ pub fn part2(lines: Lines<BufReader<File>>) -> String {
     });
     let mut i = 0;
     loop {
-        if maybe_a_tree(&robots, WIDTH, HEIGHT) {
+        if maybe_a_tree(&robots) {
             display_robots(&robots, WIDTH, HEIGHT);
             println!("Second {}", i);
             let _ = stdin().read(&mut [0u8]).unwrap();
