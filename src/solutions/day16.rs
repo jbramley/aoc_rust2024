@@ -1,5 +1,4 @@
 use itertools::Itertools;
-use num::abs;
 use std::cmp::{Ordering, Reverse};
 use std::collections::{BinaryHeap, HashMap, HashSet, VecDeque};
 use std::fmt::{Display, Formatter};
@@ -56,7 +55,6 @@ struct Node {
     y: usize,
     f: usize,
     g: usize,
-    h: usize,
     dir: Dir,
 }
 
@@ -68,7 +66,6 @@ impl Node {
             y,
             f: g + h,
             g,
-            h,
             dir,
         }
     }
