@@ -84,8 +84,8 @@ pub fn part1(lines: Lines<BufReader<File>>) -> String {
                 continue;
             }
             if n.p + 1 < dist[&(x, y)] {
-                dist.entry((x, y)).and_modify(|mut d| *d = n.p + 1);
-                prev.entry((x, y)).and_modify(|mut p| *p = Some((n.x, n.y)));
+                dist.entry((x, y)).and_modify(|d| *d = n.p + 1);
+                prev.entry((x, y)).and_modify(|p| *p = Some((n.x, n.y)));
                 q.push(Reverse(Node { x, y, p: n.p + 1 }));
             }
         }
@@ -97,7 +97,7 @@ pub fn part1(lines: Lines<BufReader<File>>) -> String {
 pub fn part2(lines: Lines<BufReader<File>>) -> String {
     let mut grid = [['.'; WIDTH]; HEIGHT];
 
-    let mut coords = lines
+    let coords = lines
         .flatten()
         .map(|s| {
             let (s1, s2) = s.split_once(',').unwrap();
@@ -142,8 +142,8 @@ fn dijkstra(grid: &mut [[char; 71]; 71]) -> usize {
                 continue;
             }
             if n.p + 1 < dist[&(x, y)] {
-                dist.entry((x, y)).and_modify(|mut d| *d = n.p + 1);
-                prev.entry((x, y)).and_modify(|mut p| *p = Some((n.x, n.y)));
+                dist.entry((x, y)).and_modify(|d| *d = n.p + 1);
+                prev.entry((x, y)).and_modify(|p| *p = Some((n.x, n.y)));
                 q.push(Reverse(Node { x, y, p: n.p + 1 }));
             }
         }
